@@ -2,34 +2,33 @@ from django.db import models
 
 # Create your models here.
 
-class Curso(models.Model):
+
+class Ruta(models.Model):
     nombre=models.CharField(max_length=50)
-    comision=models.IntegerField()
+    ubicacion=models.CharField(max_length=50)
+    longitud=models.IntegerField()
+    vigencia=models.IntegerField()
     
-
-    def __str__(self):
-        return self.nombre+" "+str(self.comision)
-
-
-
-class Estudiante(models.Model):
+    def __str__(self) -> str:
+        return self.nombre+" en "+self.ubicacion
+    
+class Persona(models.Model):
     nombre= models.CharField(max_length=50)
+    edad=models.IntegerField()
     apellido= models.CharField(max_length=50)
     email= models.EmailField()
+    
+    def __str__(self) -> str:
+        return self.apellido+" "+self.nombre
 
-    def __str__(self):
-        return self.nombre+" "+self.apellido
 
-class Profesor(models.Model):
+class Entrenador(models.Model):
     nombre= models.CharField(max_length=50)
+    edad=models.IntegerField()
     apellido= models.CharField(max_length=50)
     email= models.EmailField()
-    profesion= models.CharField(max_length=50)
+    antiguedad= models.CharField(max_length=50)
 
     def __str__(self) -> str:
         return self.apellido+" "+self.nombre
 
-class Entregable(models.Model):
-    nombre= models.CharField(max_length=50)
-    fecha_entrega= models.DateField()
-    entregado= models.BooleanField()

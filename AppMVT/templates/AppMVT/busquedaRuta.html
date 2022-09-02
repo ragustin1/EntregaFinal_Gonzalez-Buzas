@@ -1,0 +1,37 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5">ESTE TITULO VIENE DE INICIO</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+<h1>Busca tu ruta de trekking!!</h1>
+<form action="/AppMVT/buscar" method="GET">
+
+      <input type="string" name = "ubicacion">
+      <input type="submit" value = "Buscar">
+
+</form>
+
+<p> Estamos buscando la ubicacion: {{ ubicacion }} </p>
+
+{% if rutas %}
+
+<ul>
+{% for ruta in rutas%}
+      <li> {{ ruta.nombre }} </li>
+      <li> {{ ruta.ubicacion }} </li>
+{% endfor %}
+
+</ul> 
+
+{% endif %}
+            
+
+
+
+{% endblock %}

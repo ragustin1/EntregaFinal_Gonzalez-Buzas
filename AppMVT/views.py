@@ -1,40 +1,28 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from AppMVT.models import *
-from django.template import loader
+from django.shortcuts import render
+from .models import Curso, Profesor, Estudiante
 
 # Create your views here.
 
-def miPadre (self):
+def curso(request):
     
-    padre = Padre(nombre = "Oscar", edad = 72, profesion = "Tornero")
-    padre.save()
-     
-    dicc = {"nom": padre.nombre, "ed": padre.edad, "prof": padre.profesion}
+    curso=Curso(nombre="Curso de Python",comision=123456)
     
-    plantilla = loader.get_template('PlantillaPadre.html')
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+    curso.save()
+   
+    texto=f"Curso Creado: nombre: {curso.nombre} comision: {curso.comision}"
+    return HttpResponse(texto)
 
-def miMadre (self):
-    
-    madre = Madre(nombre = "Hilda", edad = 71, profesion = "Ama de casa")
-    madre.save()
-     
-    dicc = {"nom": madre.nombre, "ed": madre.edad, "prof": madre.profesion}
-    
-    plantilla = loader.get_template('PlantillaMadre.html')
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
-      
 
-def miNovia (self):
-    
-    novia = Novia(nombre = "Nadia", edad = 29, profesion = "Cirujana")
-    novia.save()
-    
-    dicc = {"nom": novia.nombre, "ed": novia.edad, "prof": novia.profesion}
-    
-    plantilla = loader.get_template('PlantillaNovia.html')
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+
+def inicio(request):
+    return render (request, "AppMVT/inicio.html")
+
+def profesores(request):
+    return render(request, "AppMVT/profesores.html" )
+
+def estudiantes(request):
+    return render(request, "AppMVT/estudiantes.html")
+
+def entregables(request):
+    return render(request, "AppMVT/entregables.html")

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Entrenador, Persona, Ruta
-from .forms import RutaFormulario
+from .forms import RutaFormulario, PersonaFormulario, EntrenadorFormulario
 
 
 # Create your views here.
@@ -18,21 +18,6 @@ def entrenadores(request):
 def rutas(request):
     return render(request, "AppMVT/rutas.html")
 
-# def rutaFormulario(request):
-#     if request.method == "POST":
-#         miFormulario = RutaFormulario(request.POST)
-#         print (miFormulario)
-#         if miFormulario.is_valid:
-#             informacion = miFormulario.cleaned_data
-#             rutaNueva= Ruta (nombre = informacion['rutaNueva'])
-#             rutaNueva.save()
-#             return render (request, "AppMVT/inicio.html")
-#     else:  
-#             miFormulario = RutaFormulario()
-#     return render(request, "AppMVT/rutaFormulario.html", {"miFormulario":miFormulario})
-
-
-
 def rutaFormulario(request):
 
     if request.method=="POST":
@@ -48,6 +33,38 @@ def rutaFormulario(request):
         miFormulario=RutaFormulario()
     return render(request, "AppMVT/rutaFormulario.html", {"miFormulario":miFormulario})
 
+def personaFormulario(request):
+
+    if request.method=="POST":
+        miFormulario= PersonaFormulario(request.POST)
+        print(miFormulario)
+        if miFormulario.is_valid():
+            info=miFormulario.cleaned_data
+            print(info)
+            personaNueva=Persona(nombre=info['nombre'],apellido=info['apellido'],edad=info['edad'],
+            ubicacion=info['ubicacion'],email=info['email'])
+            personaNueva.save()
+            return render(request, "AppMVT/inicio.html")    
+    else:
+        miFormulario=PersonaFormulario()
+    return render(request, "AppMVT/personaFormulario.html", {"miFormulario":miFormulario})
+
+def entrenadorFormulario(request):
+
+    if request.method=="POST":
+        miFormulario= EntrenadorFormulario(request.POST)
+        print(miFormulario)
+        if miFormulario.is_valid():
+            info=miFormulario.cleaned_data
+            print(info)
+            entrenadorNuevo=Entrenador(nombre=info['nombre'],apellido=info['apellido'],edad=info['edad'],
+            ubicacion=info['ubicacion'],nivel=info['nivel'],email=info['email'])
+            entrenadorNuevo.save()
+            return render(request, "AppMVT/inicio.html")    
+    else:
+        miFormulario=EntrenadorFormulario()
+    return render(request, "AppMVT/entrenadorFormulario.html", {"miFormulario":miFormulario})
+
 
 
 def busquedaRuta (request):
@@ -56,7 +73,6 @@ def busquedaRuta (request):
 def buscar(request):
     if request.GET ["ubicacion"]:
     
-    # respuesta = f"Estoy buscando la ruta N° {request.GET['ruta']}"
         ubicacion = request.GET['ubicacion']
         ubicacionRuta = Ruta.objects.filter(ubicacion=ubicacion)
     

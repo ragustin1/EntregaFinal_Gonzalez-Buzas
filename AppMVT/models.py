@@ -14,8 +14,9 @@ class Ruta(models.Model):
     
 class Persona(models.Model):
     nombre= models.CharField(max_length=50)
-    edad=models.IntegerField()
     apellido= models.CharField(max_length=50)
+    edad=models.IntegerField()
+    ubicacion=models.CharField(max_length=50)
     email= models.EmailField()
     
     def __str__(self) -> str:
@@ -23,11 +24,13 @@ class Persona(models.Model):
 
 
 class Entrenador(models.Model):
-    nombre= models.CharField(max_length=50)
+    nombre=models.CharField(max_length=50)
+    apellido=models.CharField(max_length=50)
     edad=models.IntegerField()
-    apellido= models.CharField(max_length=50)
-    email= models.EmailField()
-    antiguedad= models.CharField(max_length=50)
+    ubicacion=models.CharField(max_length=50)
+    nivel=models.CharField(max_length=50)
+    email=models.EmailField()
+    
 
     def __str__(self) -> str:
         return self.apellido+" "+self.nombre

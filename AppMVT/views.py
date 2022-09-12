@@ -9,14 +9,23 @@ from .forms import RutaFormulario, PersonaFormulario, EntrenadorFormulario
 def inicio(request):
     return render (request, "AppMVT/inicio.html")
 
+# def personas(request):
+#     return render(request, "AppMVT/personas.html" )
+
 def personas(request):
-    return render(request, "AppMVT/personas.html" )
+    personas=Persona.objects.all()
+    print(personas)
+    return render(request, "AppMVT/personas.html", {"personas":personas})
 
 def entrenadores(request):
-    return render(request, "AppMVT/entrenadores.html")
+    entrenadores=Entrenador.objects.all()
+    print(entrenadores)
+    return render(request, "AppMVT/entrenadores.html", {"entrenadores":entrenadores})
 
 def rutas(request):
-    return render(request, "AppMVT/rutas.html")
+    rutas=Ruta.objects.all()
+    print(rutas)
+    return render(request, "AppMVT/rutas.html", {"rutas":rutas})
 
 def rutaFormulario(request):
 

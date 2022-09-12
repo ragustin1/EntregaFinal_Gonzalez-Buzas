@@ -1,6 +1,6 @@
 {% extends "AppMVT/padre.html" %}
 
-{% comment %} {% load static %}
+{% load static %}
 
 
 {% block titulo_de_pagina %}
@@ -21,35 +21,5 @@
 
 </form>
 
-{% endblock %} {% endcomment %}
-
-{% load static %}
-
-
-{% block titulo_de_pagina %}
-<h1 class="mb-5">LISTADO!</h1>
 {% endblock %}
 
-
-{% block contenido_que_cambia %}
-
-
-
-
-<h1>LISTADO DE ESTUDIANTES</h1>
-
-{% for estudiante in object_list %}
-
-    <li>{{ estudiante }}</li>
-    
-    
-{% endfor %}
-
-
-
-{% endblock %}
-{% block scripts %}
-
-
-
-{% endblock %}

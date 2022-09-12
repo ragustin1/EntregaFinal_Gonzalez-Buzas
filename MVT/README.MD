@@ -19,6 +19,10 @@ A continuacion el tutorial de como utilizar nuestra pagina:
 
 - "Registra tu ruta!", la cual te lleva a la url "/AppMVT/rutaFormulario/", donde podras registrar tu ruta de trekking, para ello deberas darle el nombre que quieras a esa ruta, poner su ubicacion, su ubicacion geografica como mas prefieras, y por ultimo en vigencia, deberas colocar desde cuando existe esa ruta.
 
+- "Registrar usuario!", la cual te lleva a la url "/AppMVT/personaFormulario/", donde podras registrarte como un nuevo usuario.
+
+- "Registrar entrenador!", la cual te lleva a la url "/AppMVT/entrenadorFormulario/", donde podras registrarte como un nuevo entrenador de trekking.
+
 - "Encontra tu ruta!", te lleva a "/AppMVT/busquedaRuta/" donde te permite buscar una ruta en la base de datos, ingresando solamente la ubicacion de tu preferencia.
 
 - "Rutas" te direcciona a "/AppMVT/rutas/" y te permite ver todas las rutas subidas por los usuarios. 

@@ -2,8 +2,24 @@
 {% load static %}
 {% block contenido_que_cambia %}
 
-    <h1>Esta es la pagina principal del blog! Bienvenido!</h1>
- 
+<h2>{{ mensaje }}</h2>
+
+
+    {% for post in posts %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post block">
+                    <h2 class="subtitle">{{ post.title }}</h2>
+                    <small>Creado el {{ post.fechaCreacion }} </small>
+                    <p>{{ post.intro }}</p>
+                    <a href = "{% url 'postDetalle' post.slug %}"> Leer mas </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
 
 {% endblock %}
-

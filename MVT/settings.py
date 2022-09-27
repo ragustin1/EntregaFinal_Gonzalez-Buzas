@@ -11,9 +11,21 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from django.urls import reverse_lazy
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent   #<-------------------------- Si algo Crashea, borrar la linea de abajo y restaurar esta
+
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# A esto lo silenciamos porque esta dos veces, y la otra es la que funciona
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, '/AppMVT/static'),
+# )
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,6 +40,15 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Aca agregamos el url que tiene que mostrar, cuando un usuario NO registrado busca acceder a alguna vista.
+
+LOGIN_URL = '/AppMVT/login'
+
+
+# Aca creamos los directorios para guardar y utilizar imagenes
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +58,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'AppMVT'
+    'AppMVT',
+    'messenger'
+    
 ]
 
 MIDDLEWARE = [
@@ -55,7 +78,8 @@ ROOT_URLCONF = 'MVT.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/Users/ragon/EntregaDeMVT/MVT/Plantillas'],
+        # 'DIRS': ['C:/Users/ragon/EntregaDeMVT/MVT/Plantillas'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,12 +135,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
+# Con esta linea 123, vamos a lograr redireccionar al inicio, cada vez que hagamos un login de usuario.
+# Ademas hay que importar el reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('inicio')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'AppMVT\static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -1,0 +1,72 @@
+{% extends "AppMVT\padre.html" %}
+{% load static %}
+{% block contenido_que_cambia %}
+
+    
+
+    {% if post.imagenCabecera == '' %}
+
+        <h1> {{ post.title }}</h1>
+
+        <small>Creado el {{ post.fechaCreacion }} por {{ post.autor }}</small>
+
+        <p><strong> {{ post.intro }} </strong></p>
+
+        <p> {{ post.body }} </p>
+
+    {% else %}
+    
+        <h1> {{ post.title }}</h1>
+
+        <small>Creado el {{ post.fechaCreacion }} por {{ post.autor }}</small>
+
+        <p><strong> {{ post.intro }} </strong></p>
+
+        <p> {{ post.body }} </p>
+        
+        <img src=" {{ post.imagenCabecera.url }}" class = "rounded featured-image-list" alt="{{post.title}}">
+
+    {% endif %}
+    <hr>
+
+    <h2 class ="subtitle"> Comentarios </h2>
+
+    {% for comment in post.comments.all %}
+
+        <article class = 'media'>
+            <div class ="media-content">
+                <div class ='content'>
+                    <p>
+                        <strong> {{ comment.nombre}} </strong> <small>{{ comment.fechaComentario }}</small>
+                        <br>
+                        {{ comment.body }}
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    {% empty %}
+        <div class ="notification">
+            <p> No hay comentarios aun! </p>
+        </div>
+    {% endfor %}
+
+    <hr>
+
+    <h2 class = "subtitle"> Comentar </h2>
+
+    <form method = "post" action =".">
+
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <div class = "field">
+            <div class = "control">
+                <button class = "button is-success"> Enviar Comentario</button>
+            </div>
+        </div>
+    </form>
+    
+{% endblock %}
+

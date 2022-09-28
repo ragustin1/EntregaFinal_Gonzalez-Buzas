@@ -1,15 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Entrenador, Persona, Ruta, Post, Avatar
-from .forms import RutaFormulario, PersonaFormulario, EntrenadorFormulario, UserRegisterForm, UserEditForm, AvatarForm, CommentForm
+from .models import Post, Avatar
+from .forms import UserRegisterForm, UserEditForm, AvatarForm, CommentForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-
 
 # Create your views here.
 
@@ -22,7 +18,11 @@ def inicio(request):
         return render (request, "AppMVT/inicio.html", {'posts':posts})
     else:
         return render (request, "AppMVT/inicio.html", {'posts':posts, 'url':avatares[0].imagen.url}) 
-
+    
+    
+def about(request):
+    return render(request, "AppMVT/about.html")
+    
 
 # Ahora agregamos la vista detallada del POST
 
@@ -109,8 +109,6 @@ def editarPerfil(request):
 
 
 
-    
-    
 
    
 
@@ -227,6 +225,3 @@ def editarPerfil(request):
 #         respuesta = "No enviaste datos"
         
 #     return  HttpResponse(respuesta)
-
-
-

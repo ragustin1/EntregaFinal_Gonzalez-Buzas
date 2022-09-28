@@ -6,17 +6,20 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
+
 urlpatterns = [    
-    path('', inicio, name='inicio'),     
+    path('', inicio, name='inicio'),   
+    path('about/', about, name='about'),
     path('login/', login_request, name='login'),
     path('register/', register, name='register'),
     path('logout/', LogoutView.as_view(template_name='AppMVT/logout.html'), name='logout'),
     path('<slug:slug>/', postDetalle, name = 'postDetalle'),
     path('editarPerfil', editarPerfil, name = 'editarPerfil')
+    
     ]
 
 
- 
+
     
     # path('personas/', personas, name='personas'),
     # path('entrenadores/', entrenadores, name='entrenadores'),

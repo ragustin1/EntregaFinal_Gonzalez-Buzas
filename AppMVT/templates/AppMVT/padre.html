@@ -47,13 +47,14 @@
             {% if not request.user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'login' %}">Inicia Sesion!</a>
             <a class="btn btn-primary" href="{% url 'register' %}">Registrate!</a>
+            
             {% else %}
             <div class='usuarioLogin'>
 
                 <p>Hola! {{ user.username }}</p>
                 <img style="border: 2px solid; color: black;" src="{{url}}" alt="" width="50" height="50" />
                 <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
-
+                <a class="btn btn-primary" href="{% url 'editarPerfil' %}">Edita tu perfil!</a>
             </div>
 
             {% endif %}
@@ -71,9 +72,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="{% static 'navbar-nav ms-auto py-40 py-lg-0' %}">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'inicio' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'about' %}">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'messenger:list' %}">Messenger</a></li>
                     
                     </ul>    

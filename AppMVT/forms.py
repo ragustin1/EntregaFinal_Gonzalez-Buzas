@@ -5,29 +5,30 @@ from django.contrib.auth.models import User
 from .models import Comment
 
 
-class RutaFormulario(forms.Form):
-    #especificar los campos
-    nombre=forms.CharField(max_length=50)
-    ubicacion=forms.CharField(max_length=50)
-    longitud=forms.IntegerField()
-    vigencia=forms.IntegerField()
+
+# class RutaFormulario(forms.Form):
+#     #especificar los campos
+#     nombre=forms.CharField(max_length=50)
+#     ubicacion=forms.CharField(max_length=50)
+#     longitud=forms.IntegerField()
+#     vigencia=forms.IntegerField()
     
-class PersonaFormulario(forms.Form):
-    #especificar los campos
-    nombre=forms.CharField(max_length=50)
-    apellido=forms.CharField(max_length=50)
-    edad=forms.IntegerField()
-    ubicacion=forms.CharField(max_length=50)
-    email=forms.EmailField()
+# class PersonaFormulario(forms.Form):
+#     #especificar los campos
+#     nombre=forms.CharField(max_length=50)
+#     apellido=forms.CharField(max_length=50)
+#     edad=forms.IntegerField()
+#     ubicacion=forms.CharField(max_length=50)
+#     email=forms.EmailField()
     
-class EntrenadorFormulario(forms.Form):
-    #especificar los campos
-    nombre=forms.CharField(max_length=50)
-    apellido=forms.CharField(max_length=50)
-    edad=forms.IntegerField()
-    ubicacion=forms.CharField(max_length=50)
-    nivel=forms.CharField(max_length=50)
-    email=forms.EmailField()
+# class EntrenadorFormulario(forms.Form):
+#     #especificar los campos
+#     nombre=forms.CharField(max_length=50)
+#     apellido=forms.CharField(max_length=50)
+#     edad=forms.IntegerField()
+#     ubicacion=forms.CharField(max_length=50)
+#     nivel=forms.CharField(max_length=50)
+#     email=forms.EmailField()
 
 class UserRegisterForm(UserCreationForm):
     email=forms.EmailField()
@@ -59,3 +60,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['nombre', 'correo', 'body']
+        
+        

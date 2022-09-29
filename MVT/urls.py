@@ -23,7 +23,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('AppMVT.urls')),
-    path('messenger', include(('messenger.urls','messenger'), namespace='messenger')),
+    path('accounts/', include('messenger.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

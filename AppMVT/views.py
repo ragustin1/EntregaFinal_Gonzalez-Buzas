@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Post, Avatar
-from .forms import UserRegisterForm, UserEditForm, AvatarForm, CommentForm
+from .models import Post
+from messenger.models import Avatar
+from .forms import UserRegisterForm, UserEditForm, CommentForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.urls import reverse_lazy
@@ -74,18 +75,18 @@ def login_request(request):
         form=AuthenticationForm()
         return render(request, 'AppMVT/login.html', {'form':form})
 
-def register(request):
-    if request.method=="POST":
-        form= UserRegisterForm(request.POST)
-        if form.is_valid():
-            username=form.cleaned_data["username"]
-            #podriamos fijarnos que no exista un user en la bd con ese nombre
+# def register(request):
+#     if request.method=="POST":
+#         form= UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             username=form.cleaned_data["username"]
+#             #podriamos fijarnos que no exista un user en la bd con ese nombre
 
-            form.save()
-            return render(request, 'AppMVT/inicio.html', {'mensaje':f"Usuario {username} creado"})
-    else:
-        form=UserRegisterForm()
-    return render(request, 'AppMVT/register.html', {'form':form})
+#             form.save()
+#             return render(request, 'AppMVT/inicio.html', {'mensaje':f"Usuario {username} creado"})
+#     else:
+#         form=UserRegisterForm()
+#     return render(request, 'AppMVT/register.html', {'form':form})
 
 
 
@@ -225,3 +226,5 @@ def editarPerfil(request):
 #         respuesta = "No enviaste datos"
         
 #     return  HttpResponse(respuesta)
+
+

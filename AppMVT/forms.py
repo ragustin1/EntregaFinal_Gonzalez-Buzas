@@ -53,8 +53,8 @@ class UserEditForm(UserCreationForm):
         fields = [ 'email', 'password1', 'password2', 'first_name', 'last_name']
         help_texts = {k:"" for k in fields}
 
-class AvatarForm(forms.Form):
-    imagen= forms.ImageField(label="Imagen")
+# class AvatarForm(forms.Form):
+#     imagen= forms.ImageField(label="Imagen")
     
 class CommentForm(forms.ModelForm):
     class Meta:

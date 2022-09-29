@@ -1,56 +1,217 @@
-from django.shortcuts import render
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic import TemplateView
-from .models import Thread, Message
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.urls.base import reverse
+# Decorators
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.http import Http404, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.models import User
-from django.urls import reverse_lazy
+# For make complex lookups (AND/OR)
+from django.db.models import Q
+
+from django.contrib.auth.decorators import user_passes_test
+
+# Defined User's models and forms
+from messenger.forms import RegisterForm, UpdateProfileForm, MessageForm, AvatarForm
+from messenger.models import Avatar, Message
+
+
 
 # Create your views here.
-# @method_decorator(login_required, name="dispatch")
-# class ThreadList(ListView):
-#     model = Thread
 
-#     def get_queryset(self):
-#         queryset = super(ThreadList, self).get_queryset()
-#         return queryset.filter(users=self.request.user)
-@method_decorator(login_required, name="dispatch")
-class ThreadList(TemplateView):
-    template_name = "messenger/thread_list.html"   
 
-@method_decorator(login_required, name="dispatch")
-class ThreadDetail(DetailView):
-    model = Thread
+def register(request):
+    """Register a new user."""
 
-    def get_object(self):
-        obj = super(ThreadDetail, self).get_object()
-        if self.request.user not in obj.users.all():
-            raise Http404()
-        return obj
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = RegisterForm()
 
-def add_message(request, pk):
-    json_response = {'created':False}
-    if request.user.is_authenticated:
-        content = request.GET.get('content', None)
-        if content:
-            thread = get_object_or_404(Thread, pk=pk)  
-            message = Message.objects.create(user=request.user, content=content)
-            thread.messages.add(message)
-            json_response['created'] = True
-            # Comprobamos si es el 1er mensaje
-            if len(thread.messages.all()) is 1:
-                json_response['first'] = True
     else:
-        raise Http404("User is not authenticated")
+        # Paso formulario con datos ingresados por POST
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # Para loguearse al crear nuevo usuario
+            login(request, new_user)
+            # Redirecciono a Perfil con usuario ya logueado
+            return redirect(reverse('users:Profile', args=[id]))
 
-    return JsonResponse(json_response)
+    context = {
+        'form': form,
+        'title': 'Registro usuario',
+        'warnings': [
+            'El nombre de usuario no puede ser mayor a 150 caracteres. Solo letras, numeros y "@/./+/-/_"',
+            'La contraseña no puede ser similar a tus datos registrados',
+            'La contraseña debe contener al menos 8 caracteres y debe contener aunque sea una letra y un numero',
+        ]
+    }
+    return render(request, 'messenger/register.html', context)
+
 
 @login_required
-def start_thread(request, username):
-    user = get_object_or_404(User, username=username)
-    thread = Thread.objects.find_or_create(user, request.user)
-    return redirect(reverse_lazy('messenger:detail', args=[thread.pk]))   
+def update_profile(request):
+    """Update user profile."""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = UpdateProfileForm(instance=user)
+
+    else:
+        # Data submitted. Formulario para guardar con los datos enviados por POST
+        form = UpdateProfileForm(instance=user, data=request.POST)
+        if form.is_valid():
+            edited_user = form.save()
+            # Login if user requested a password or username change (if not, user  would be logged out)
+            login(request, edited_user)
+            return redirect(reverse('messenger:Profile', args=[id]))
+
+    context = {
+        'title': 'Actualizar',
+        'subtitle': 'Actualizar usuario',
+        'form': form,
+        'avatar': avatar
+    }
+    return render(request, 'update_profile.html', context)
+
+
+@login_required
+def profile(request, user_id):
+    """Profile view data"""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    context = {
+        'user': user,
+        'avatar': avatar,
+        'title': 'Profile',
+    }
+    return render(request, 'messenger/profile.html', context)
+
+# Decorator only superusers can change the avatar (consigna)
+@user_passes_test(lambda u: u.is_superuser)
+def update_avatar(request):
+    """Update user's avatar."""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = AvatarForm()
+    
+    else:
+        form = AvatarForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            avatars = Avatar.objects.filter(user=user)
+
+            if len(avatars) > 0:
+                new_avatar = avatars[0]
+                new_avatar.avatar = form.cleaned_data['avatar']
+                new_avatar.save()
+            else:
+                new_avatar = Avatar(user=user, avatar=form.cleaned_data['avatar'])
+                new_avatar.save()
+        
+        return redirect(reverse('messenger:Profile', args=[id]))
+    
+    context = {
+        'title': 'Update Avatar',
+        'subtitle': 'Actualizar avatar',
+        'form': form,
+        'avatar': avatar
+    }
+    return render(request, 'update_avatar.html', context)
+
+
+@login_required
+def messages(request):
+    """Inbox view"""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+    
+    messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-sent_at')
+    received = messages.filter(receiver=user).order_by('-sent_at')
+    sent = messages.filter(sender=user).order_by('-sent_at')
+
+    context = {
+        'title': 'Inbox',
+        'user': user,
+        'messages': messages,
+        'received': received,
+        'sent':sent,
+        'avatar': avatar,
+    }
+    return render(request, 'messages.html', context)
+
+
+@login_required
+def new_message(request):
+    """Sending new messages."""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = MessageForm()
+    
+    else:
+        # Data submitted. Paso formulario con datos ingresados por POST
+        form = MessageForm(data=request.POST)
+        if form.is_valid():
+
+            msg = form.save(commit=False)
+            msg.sender = request.user
+            msg.save()
+
+            return redirect('AppMVT:Messages')
+    
+    context = {
+        'form': form,
+        'title': 'New message',
+        'avatar':avatar,
+    }
+    return render(request, 'new_msg.html', context)
+
+
+@login_required
+def delete_msg(request, msg_id):
+    """View for deleting msg."""
+
+    # Try para buscar promo por id
+    try:
+        msg = Message.objects.get(id=msg_id)
+        msg.delete()
+        return redirect('AppMVT:Messages')
+    # Si levanta una excepcion renderiza a la pagina de inicio
+    except Exception as exc:
+        return redirect('AppMVT:Inicio')

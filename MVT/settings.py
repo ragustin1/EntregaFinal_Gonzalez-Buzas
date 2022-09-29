@@ -42,7 +42,7 @@ ALLOWED_HOSTS = []
 
 # Aca agregamos el url que tiene que mostrar, cuando un usuario NO registrado busca acceder a alguna vista.
 
-LOGIN_URL = '/AppMVT/login'
+LOGIN_URL = '/login/'
 
 
 # Aca creamos los directorios para guardar y utilizar imagenes
@@ -59,8 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AppMVT',
-    'messenger'
-    
+   
 ]
 
 MIDDLEWARE = [

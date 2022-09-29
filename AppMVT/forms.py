@@ -5,31 +5,6 @@ from django.contrib.auth.models import User
 from .models import Comment
 
 
-
-# class RutaFormulario(forms.Form):
-#     #especificar los campos
-#     nombre=forms.CharField(max_length=50)
-#     ubicacion=forms.CharField(max_length=50)
-#     longitud=forms.IntegerField()
-#     vigencia=forms.IntegerField()
-    
-# class PersonaFormulario(forms.Form):
-#     #especificar los campos
-#     nombre=forms.CharField(max_length=50)
-#     apellido=forms.CharField(max_length=50)
-#     edad=forms.IntegerField()
-#     ubicacion=forms.CharField(max_length=50)
-#     email=forms.EmailField()
-    
-# class EntrenadorFormulario(forms.Form):
-#     #especificar los campos
-#     nombre=forms.CharField(max_length=50)
-#     apellido=forms.CharField(max_length=50)
-#     edad=forms.IntegerField()
-#     ubicacion=forms.CharField(max_length=50)
-#     nivel=forms.CharField(max_length=50)
-#     email=forms.EmailField()
-
 class UserRegisterForm(UserCreationForm):
     email=forms.EmailField()
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -53,8 +28,8 @@ class UserEditForm(UserCreationForm):
         fields = [ 'email', 'password1', 'password2', 'first_name', 'last_name']
         help_texts = {k:"" for k in fields}
 
-# class AvatarForm(forms.Form):
-#     imagen= forms.ImageField(label="Imagen")
+class AvatarForm(forms.Form):
+    imagen= forms.ImageField(label="Imagen")
     
 class CommentForm(forms.ModelForm):
     class Meta:

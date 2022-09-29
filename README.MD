@@ -1,39 +1,42 @@
-Esto es una continuacion del trabajo anterior, con algunas modificaciones!
+Bienvenidos a nuestro blog de Trekking.
 
-Venimos a presentar nuestra pagina de trekking!
+Este es un blog creado por Ramiro Gonzalez y Pablo Buzas.
 
-Retomando desde la entrega inicial, se trabajo optimizando los archivos, para disminuir las lineas de codigo y hacer mas entendible cada una de ellas.
+En la base de datos, esta la informacion correspondiente para que puedan visualizar algunos posts, y probar las funciones como ser "Ver mas" y realizar comentarios a los mismos.
 
-Como mejora, se utilizo el metodo "render", en lugar del "HttpResponse", haciendo el codigo mas amigable.
-Por otro lado, se implemento un modelo de Bootstrap, para hacer mas amigable el entorno visual, y se configuraron algunas de sus funcionalidades, quedando pendiente varias modificaciones. 
+La reparticion de tareas fue la siguiente:
 
-A grandes rasgos se fueron migrando los archivos a la App llamada "AppMVT", para lograr una implementacion mas limpia y simplificada.
+Ramiro: Encagargado de crear el archivo base llamado "padre.html", con su plantilla de Bootstrap correspondiente, y de generar el modelo "Post" junto con los views correspondientes a post, post detalle, register, login y logout.
 
-En esta pagina van a poder Registrar sus rutas de Trekking, como asi tambien realizar busquedas de rutas existentes, ingresando la ubicacion geografica que deseen. Para esto fue necesario trabajar con la base de datos y crear un superusuario, para poder acceder al modo admin, y agregar/modificar/eliminar datos.
+Pablo: Encargado de generar los avatar para que pueda usar cada usuario, y hacer que quede de un tamaño y posicion coherente, junto con el modelo para realizar comentarios en los post, y hacer ajustes esteticos en general.
 
----------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------
 
-A continuacion el tutorial de como utilizar nuestra pagina:
+Pasos para ejecutar el repositorio:
 
-- En el inicio, el cual es "/AppMVT", podran ver el contenido general de la pagina, desde alli podran acceder a traves de los botones, a las siguientes opciones:
+Instrucciones:
+-   Instalar Python desde la web oficial
 
-- "Registra tu ruta!", la cual te lleva a la url "/AppMVT/rutaFormulario/", donde podras registrar tu ruta de trekking, para ello deberas darle el nombre que quieras a esa ruta, poner su ubicacion, su ubicacion geografica como mas prefieras, y por ultimo en vigencia, deberas colocar desde cuando existe esa ruta.
+-   Clonar el proyecto
 
-- "Registrar usuario!", la cual te lleva a la url "/AppMVT/personaFormulario/", donde podras registrarte como un nuevo usuario.
+-   Instalar las dependencias del proyecto:
 
-- "Registrar entrenador!", la cual te lleva a la url "/AppMVT/entrenadorFormulario/", donde podras registrarte como un nuevo entrenador de trekking.
+    Automaticamente:
 
-- "Encontra tu ruta!", te lleva a "/AppMVT/busquedaRuta/" donde te permite buscar una ruta en la base de datos, ingresando solamente la ubicacion de tu preferencia.
+    pip install -r requirements.txt
+    De forma manual:
 
-- "Rutas" te direcciona a "/AppMVT/rutas/" y te permite ver todas las rutas subidas por los usuarios. 
+    pip install django
+    pip install Pillow
 
-- "Personas" te direcciona a "/AppMVT/personas/" y te permite ver todas los usuarios registrados en la pagina.
+-   Realizar las migraciones para generar la base de datos
 
-- "Entrenadores" te direcciona a "/AppMVT/entrenadores/" y te permite ver todas las entrenadores disponibles que se encuentran registrados.  
+    python manage.py makemigrations
+    python manage.py migrate
+    Correr la aplicacion
 
----------------------------------------------------------------------------------------------------------------
+    python manage.py runserver
 
+Habiendo realizado correctamente los pasos, ya podras ingresar al Blog, a traves de:
 
-Espero la pagina sea de su agrado!
-
-
+http://127.0.0.1:8000/

@@ -4,41 +4,6 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-# Create your models here.
-
-
-# class Ruta(models.Model):
-#     nombre=models.CharField(max_length=50)
-#     ubicacion=models.CharField(max_length=50)
-#     longitud=models.IntegerField()
-#     vigencia=models.IntegerField()
-    
-#     def __str__(self) -> str:
-#         return self.nombre+" en "+self.ubicacion
-    
-# class Persona(models.Model):
-#     nombre= models.CharField(max_length=50)
-#     apellido= models.CharField(max_length=50)
-#     edad=models.IntegerField()
-#     ubicacion=models.CharField(max_length=50)
-#     email= models.EmailField()
-    
-#     def __str__(self) -> str:
-#         return self.apellido+" "+self.nombre
-
-
-# class Entrenador(models.Model):
-#     nombre=models.CharField(max_length=50)
-#     apellido=models.CharField(max_length=50)
-#     edad=models.IntegerField()
-#     ubicacion=models.CharField(max_length=50)
-#     nivel=models.CharField(max_length=50)
-#     email=models.EmailField()
-    
-
-#     def __str__(self) -> str:
-#         return self.apellido+" "+self.nombre
-
 # Creamos la clase Post. Ver que es el SLUG y si podemos renombrarlo.
 # Tambien creamos la variable fechaCreacion, para que se pueda asignar la fecha cuando fue creado el posteo.
 class Post(models.Model):
@@ -61,9 +26,9 @@ class Post(models.Model):
     def __str__(self):
         return f"Titulo: {self.title} - Creado: {self.fechaCreacion} "
     
-# class Avatar(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     imagen = models.ImageField(upload_to='avatares', null = True, blank = True)
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to='avatares', null = True, blank = True)
     
     
 class Comment(models.Model):

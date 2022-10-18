@@ -1,0 +1,34 @@
+{% comment %} {% extends "AppMVT/padre.html" %}
+{% load static %}
+
+{% block content %}
+{% if message %}
+<h1 style="color:red">{{message}}</h1> 
+{% endif %}
+<h3 class="titulo-inbox">Inbox</h3>
+<button class="btn btn-light"><a href="{% url 'messenger:list-users' %}">Nuevo mensaje</a></button>
+<p></p>
+<p>Mensajes recibidos</p>
+<p></p>
+<table class="table table-dark">
+    
+<thead>
+    <tr>
+        <th scope="col">De</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Mensaje</th>
+      </tr>
+</thead>
+<tbody>
+    {% for message in pms %}
+    <tr>
+        <td>{{ message.user_origin }}</td>
+        <td>{{ message.pub_date }}</td>
+        <td>{{ message.text_message }}</td>
+    </tr>
+    {% empty %}
+    <h4>No hay mensajes</h4>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% endcomment %}

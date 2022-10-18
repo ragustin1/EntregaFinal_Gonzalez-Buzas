@@ -1,0 +1,22 @@
+{% comment %} {% extends "AppMVT/padre.html" %}
+{% load static %}
+
+{% block content %}
+{% if message %}
+<h1 style="color:red">{{message}}</h1> 
+{% endif %}
+
+<div class="container">
+        {% for person in people %}
+        {% if person != request.user %}
+            <form method="POST" action="{% url 'messenger:send_messages' person.id %}" >{% csrf_token %}
+                <p class="text-lowercase">Usuario: {{ person }} </p>
+                <p class="text-lowercase">Mensaje: <input type="text" name="text_message" class="" placeholder="mensaje de ejemplo"></p>
+                <button type="submit" class="boton">Enviar<i class=""></i></button>
+            </form>
+            <hr>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} {% endcomment %}

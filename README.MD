@@ -28,6 +28,7 @@ Instrucciones:
 
     pip install django
     pip install Pillow
+    pip install django-ckeditor
 
 -   Realizar las migraciones para generar la base de datos
 

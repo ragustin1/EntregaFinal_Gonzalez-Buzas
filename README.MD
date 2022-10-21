@@ -41,3 +41,25 @@ Instrucciones:
 Habiendo realizado correctamente los pasos, ya podras ingresar al Blog, a traves de:
 
 http://127.0.0.1:8000/
+
+
+----------------------------------------------------------------------------------
+
+
+Los usuarios creados para utilizar a modo de prueba son:
+
+superuser:
+
+id:ragon
+mail:ragon@mail.com
+password:123456
+
+otros:
+
+id:pablo
+mail:pablo@mail.com
+password:pablo123456
+
+id:juan
+mail:juan@mail.com
+password:juan123456
